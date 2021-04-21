@@ -25,37 +25,31 @@ module Enumerable
   end
 
   def my_all?(*args)
-    
-    if block_given? == false && self.index(nil)
-        return !self.index(nil) ? true : false
-    end
-    
-    if block_given? == true 
-      for v in self
-        return false if yield(v) == false
+    if block_given?
+      self.my_each do |e|
+        return false if yield(e) == false
       end
     end
-    
-    if block_given? == false && args.empty? == false
-      self.my_each do |e|
-        
+    if !block_given? 
+      if self.index(nil)
+        return !self.index(nil) ? true : false
+      end  
+      if !args.empty?
         if ( args[0].class != Regexp) && ( args[0].class != Class)
           return  false 
         end
-        if ( args[0].class == Regexp) &&(args[0].match(e.to_s)) == nil
-          return false
-        end
-        if ( args[0].class == Class) && (e.is_a? args[0]) == false 
-          return false
+        self.my_each do |e|
+          if ( args[0].class == Regexp) &&(args[0].match(e.to_s)) == nil
+            return false
+          end
+          if ( args[0].class == Class) && (e.is_a? args[0]) == false 
+            return false
+          end
         end
       end
     end
     return true
-   
   end
-
-
-  
 end
 
 
@@ -68,6 +62,9 @@ end
 # p ["some", "somithimes", "something"].my_all?(/s/)
 # p ["some", "somithimes", "something"].all?(/s/)
 
+# p %w[ant bear cat].my_all?(/t/)  
+# p %w[ant bear cat].all?(/t/)  
+
 # p %w[ant bear cat].my_all?(/a/) 
 # p %w[ant bear cat].all?(/a/) 
 
@@ -77,5 +74,14 @@ end
 # p %w[ant bear cat].my_all? { |word| word.length >= 3 }
 # p %w[ant bear cat].all? { |word| word.length >= 3 }
 
+# p %w[ant bear cat].my_all? { |word| word.length >= 4 }
+# p %w[ant bear cat].all? { |word| word.length >= 4 }
+
 # p %w[ant bear cat].my_all? 
 # p %w[ant bear cat].all? 
+
+# p [ nil, true, 99].my_all?  
+# p [nil, true, 99].all?  
+
+# p [].my_all?
+# p [].all?
