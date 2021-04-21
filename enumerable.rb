@@ -1,9 +1,13 @@
 module Enumerable
-  def my_each
-    for i in self do
-        yield(i)
+  def my_each(&block)
+    each(&block)
+  end
+
+  def my_each_with_index
+    each do |i|
+      yield(i, index(i))
     end
   end
 end
 
-[ "a", "b", "c" ].my_each {|x| print x, " -- " }
+%w[a b c].my_each_with_index { |val, index| puts "index: #{index} for #{val}" }
