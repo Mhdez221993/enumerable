@@ -23,17 +23,59 @@ module Enumerable
     end
     new_arr.empty? ? new_hash : new_arr
   end
+
+  def my_all?(*args)
+    
+    if block_given? == false && self.index(nil)
+        return !self.index(nil) ? true : false
+    end
+    
+    if block_given? == true 
+      for v in self
+        return false if yield(v) == false
+      end
+    end
+    
+    if block_given? == false && args.empty? == false
+      self.my_each do |e|
+        
+        if ( args[0].class != Regexp) && ( args[0].class != Class)
+          return  false 
+        end
+        if ( args[0].class == Regexp) &&(args[0].match(e.to_s)) == nil
+          return false
+        end
+        if ( args[0].class == Class) && (e.is_a? args[0]) == false 
+          return false
+        end
+      end
+    end
+    return true
+   
+  end
+
+
+  
 end
 
-p [2,4,3,5,43].my_select {|v| v.even? }
 
-stock = {
-    apples: '10',
-    oranges: 'key-value',
-    bananas: 1
-}
+# p [1, 5, 3.14].my_all?(5)
+# p [1, 5, 3.14].all?(5)
 
-p stock.my_select { |k,v| v == 'key-value' }
+# p [nil, nil, nil].my_all?
+# p [nil, nil, nil].all?
 
+# p ["some", "somithimes", "something"].my_all?(/s/)
+# p ["some", "somithimes", "something"].all?(/s/)
 
-# h = {} h.merge!(key: "bar") # => {:key=>"bar"} 
+# p %w[ant bear cat].my_all?(/a/) 
+# p %w[ant bear cat].all?(/a/) 
+
+# p [1, 2i, 3.14, 5].my_all?(Numeric) 
+# p [1, 2i, 3.14, 5].all?(Numeric) 
+
+# p %w[ant bear cat].my_all? { |word| word.length >= 3 }
+# p %w[ant bear cat].all? { |word| word.length >= 3 }
+
+# p %w[ant bear cat].my_all? 
+# p %w[ant bear cat].all? 
