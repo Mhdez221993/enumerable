@@ -1,5 +1,9 @@
 module Enumerable
   def my_each
-    # your code here
+    for i in self do
+        yield(i)
+    end
   end
 end
+
+[ "a", "b", "c" ].my_each {|x| print x, " -- " }
