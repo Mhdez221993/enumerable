@@ -12,12 +12,14 @@ module Enumerable
   end
 
   def my_select
-    for i in self do
-        yield(i)
+    new_arr = []
+    for i in self
+        new_arr << i if yield(i) == true
     end
+    new_arr
   end
 end
 
-[2,4,3,5,43].my_each_with_index {| v, i| puts "#{v} has index #{i}"}
+p [2,4,3,5,43].my_select {|v| v.even? }
 
-{"three"=>"one", "four"=> "two", "one"=> "three"}.my_each_with_index { |(k,v), i | puts "#{k} : #{v} has index #{i}"}
+# {"three"=>"one", "four"=> "two", "one"=> "three"}.my_each_with_index { |(k,v), i | puts "#{k} : #{v} has index #{i}"}
