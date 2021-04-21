@@ -1,13 +1,19 @@
 module Enumerable
-  def my_each(&block)
-    each(&block)
+  def my_each
+    for i in self do
+        self.class == Array ? yield(i) : yield(i[0], i[1])
+    end
   end
 
   def my_each_with_index
-    each do |i|
-      yield(i, index(i))
+    for i in self do
+        yield(i, self.index(i))
+    end
+  end
+
+  def my_select
+    for i in self do
+        yield(i)
     end
   end
 end
-
-%w[a b c].my_each_with_index { |val, index| puts "index: #{index} for #{val}" }
