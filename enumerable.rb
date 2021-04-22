@@ -92,46 +92,85 @@ module Enumerable
     end
     count
   end
+
+  def my_inject(*args)
+    if block_given? == false
+      args.size < 2 ? accu = self[0] : accu = args[0]
+      my_each_with_index do |v,i|
+        if args.size < 2
+          break if self[i+1] == nil
+          accu = eval "#{accu} #{args[0]} #{self[i+1]}"
+        else
+          accu = eval "#{accu} #{args[1]} #{self[i]}"
+        end
+      end
+      return accu
+    else
+      if args.empty?
+        i = 0
+        accu = self[0]
+        while i < self.length-1 || self[i+1] != nil
+          accu = yield(accu, self[i+1])
+          i+=1
+        end
+        return accu
+      else
+        i = 0
+        accu = args[0]
+        while i < self.length
+          accu = yield(accu, self[i])
+          i+=1
+        end
+        return accu
+      end
+    end
+  end
+end
+arr = ['hello', 'sheet', 'cat']
+r = arr.my_inject do |memo, word|
+  memo.length > word.length ? memo : word
 end
 
-# p [ 1,2,3,4,6,8,'3', 'as' ].my_count {|v| v%2 == 0 }
+p r
+
+# p [10,2].inject(:/)
 # p [ 1,2,3,4,6,8,'3', 'as' ].count {|v| v%2 == 0 }
 # p '-----------------------------------'
-# p [nil, nil, 3].my_count?
+# p [nil, nil, 3].my_inject?
 # p [nil, nil, 3].count?
 # p '-----------------------------------'
 
-# p ["some", "somithimes", "something"].my_count(/s/)
+# p ["some", "somithimes", "something"].my_inject(/s/)
 # p ["some", "somithimes", "something"].count(/s/)
 
 # p '-----------------------------------'
-# p %w[ant bear cat].my_count?(/t/)  
+# p %w[ant bear cat].my_inject?(/t/)  
 # p %w[ant bear cat].count?(/t/)  
 # p '-----------------------------------'
 
-# p [2,3,3].my_count(3) 
+# p [2,3,3].my_inject(3) 
 # p [1,2,3].count(3) 
 # p '-----------------------------------'
 
-# p [1, "2i", "3.14", "w"].my_count(Numeric) 
+# p [1, "2i", "3.14", "w"].my_inject(Numeric) 
 # p [1, "2i", "3.14", "2"].count(Numeric) 
 # p '-----------------------------------'
 
-# p %w[ant bear cat].my_count { |word| word.length >= 10 }
+# p %w[ant bear cat].my_inject { |word| word.length >= 10 }
 # p %w[ant bear cat].count { |word| word.length >= 10 }
 # p '-----------------------------------'
 
-# p %w[ant bear cat].my_count { |word| word.length >= 4 }
+# p %w[ant bear cat].my_inject { |word| word.length >= 4 }
 # p %w[ant bear cat].count { |word| word.length >= 4 }
 # p '-----------------------------------'
 
-# p %w[ant bear cat].my_count
+# p %w[ant bear cat].my_inject
 # p %w[ant bear cat].count
 # p '-----------------------------------'
 
-# p [ nil, true, 99].my_count
+# p [ nil, true, 99].my_inject
 # p [nil, true, 99].count
 # p '-----------------------------------'
 
-# p [1,2,3].my_count
-# p [1,2,3].count
+# p [1,2,3].my_inject
+# p [1,2,3].my_inject
