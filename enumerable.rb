@@ -1,5 +1,8 @@
 module Enumerable
   def my_each
+    if !block_given?
+      return self.to_enum(:my_each)
+    end
     for i in self do
         self.class == Array ? yield(i) : yield(i[0], i[1])
     end
@@ -132,12 +135,9 @@ module Enumerable
     end
   end
 end
-arr = ['hello', 'sheet', 'cat']
-r = arr.my_inject do |memo, word|
-  memo.length > word.length ? memo : word
-end
 
-p r
+p [1,23].my_each
+
 
 # p [10,2].inject(:/)
 # p [ 1,2,3,4,6,8,'3', 'as' ].count {|v| v%2 == 0 }
