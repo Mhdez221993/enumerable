@@ -64,47 +64,61 @@ module Enumerable
       my_each { |v| return true if yield(v) } == false
     end
   end
+
+  def my_none?(*args)
+    if !block_given?
+      if args.empty?
+        !self.empty? ? self.my_each {|v| return false if v != false || false if v != nil } == self : true
+      else
+         my_each { |v| return false if v.is_a? *args } == self if args[0].class == Class
+         my_each { |v| return false if v.match(args[0]) } == self if args[0].class == Regexp
+         my_each { |v| return false if v == args[0] } == self
+      end
+    else
+      my_each { |v| return false if yield(v) } == self
+    end
+  end
 end
 
 
-# p [1,2,2].my_any?(5)
-# p [1,2,2].any?(5)
+# p [].my_none?
+# p [].none?
 # p '-----------------------------------'
-# p [nil, nil].my_any?
-# p [nil, nil].any?
-# p '-----------------------------------'
-
-# p ["some", "somithimes", "something"].my_any?(/s/)
-# p ["some", "somithimes", "something"].any?(/s/)
-
-# p '-----------------------------------'
-# p %w[ant bear cat].my_any?(/t/)  
-# p %w[ant bear cat].any?(/t/)  
+# p [nil, nil, 3].my_none?
+# p [nil, nil, 3].none?
 # p '-----------------------------------'
 
-# p [2,3,3].my_any?(3) 
-# p [1,2,3].any?(3) 
+# p ["some", "somithimes", "something"].my_none?(/s/)
+# p ["some", "somithimes", "something"].none?(/s/)
+
+# p '-----------------------------------'
+# p %w[ant bear cat].my_none?(/t/)  
+# p %w[ant bear cat].none?(/t/)  
 # p '-----------------------------------'
 
-# p [1, 2i, 3.14, 5, 's'].my_any?(Numeric) 
-# p [1, 2i, 3.14].any?(Numeric) 
+# p [2,3,3].my_none?(3) 
+# p [1,2,3].none?(3) 
 # p '-----------------------------------'
 
-# p %w[ant bear cat].my_any? { |word| word.length >= 10 }
-# p %w[ant bear cat].any? { |word| word.length >= 10 }
+# p [1, "2i", "3.14", "w"].my_none?(Numeric) 
+# p [1, "2i", "3.14", "2"].none?(Numeric) 
 # p '-----------------------------------'
 
-# p %w[ant bear cat].my_any? { |word| word.length >= 4 }
-# p %w[ant bear cat].any? { |word| word.length >= 4 }
+# p %w[ant bear cat].my_none? { |word| word.length >= 10 }
+# p %w[ant bear cat].none? { |word| word.length >= 10 }
 # p '-----------------------------------'
 
-# p %w[ant bear cat].my_any? 
-# p %w[ant bear cat].any? 
+# p %w[ant bear cat].my_none? { |word| word.length >= 4 }
+# p %w[ant bear cat].none? { |word| word.length >= 4 }
+# # p '-----------------------------------'
+
+# p %w[ant bear cat].my_none? 
+# p %w[ant bear cat].none? 
 # p '-----------------------------------'
 
-# p [ nil, true, 99].my_any?  
-# p [nil, true, 99].any?  
+# p [ nil, true, 99].my_none?  
+# p [nil, true, 99].none?  
 # p '-----------------------------------'
 
-# p [1,2,3].my_any?
-# p [1,2,3].any?
+# p [1,2,3].my_none?
+# p [1,2,3].none?
