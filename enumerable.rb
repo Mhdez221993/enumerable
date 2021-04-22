@@ -92,7 +92,18 @@ module Enumerable
     end
     count
   end
+
+  def my_map(*args)
+    array = []
+    self.to_a.my_each { |v|  array << yield(v)}
+    array
+  end
 end
+
+# p [1,3,4,5].my_map { |i| i*i } 
+# p  (1..4).my_map { |i| i*i }
+
+# p (1..4).my_map { "cat"  } 
 
 # p [ 1,2,3,4,6,8,'3', 'as' ].my_count {|v| v%2 == 0 }
 # p [ 1,2,3,4,6,8,'3', 'as' ].count {|v| v%2 == 0 }
