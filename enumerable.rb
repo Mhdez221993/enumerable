@@ -93,6 +93,12 @@ module Enumerable
     count
   end
 
+  def my_map(*args)
+    array = []
+    self.to_a.my_each { |v|  array << yield(v)}
+    array
+  end
+
   def my_inject(*args)
     if block_given? == false
       args.size < 2 ? accu = self[0] : accu = args[0]
