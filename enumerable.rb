@@ -143,10 +143,12 @@ module Enumerable
       end
     end
   end
+
 end
 
-p [1,23].my_map
-
+def multiply_els(args)
+  args.my_inject(:*)
+end
 
 
 # p [10,2].inject(:/)
