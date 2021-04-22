@@ -1,26 +1,23 @@
+require 'date'
 module Enumerable
   def my_each
-    if !block_given?
-      return self.to_enum(:my_each)
-    end
+    return self.to_enum(:my_each) unless block_given?
+
     for i in self do
         self.class == Array ? yield(i) : yield(i[0], i[1])
     end
   end
 
   def my_each_with_index
-    if !block_given?
-      return self.to_enum(:my_each_with_index)
-    end
+    return self.to_enum(:my_each_with_index) unless block_given?
+
     for i in self do
       self.class == Array ? yield(i, self.index(i)) : yield([i[0], i[1]], self.keys.index(i[0]))
     end
   end
 
   def my_select
-    if !block_given?
-      return self.to_enum(:my_select)
-    end
+    return self.to_enum(:my_select) unless block_given?
     new_arr = []
     new_hash = {}
     self.my_each do |k,v|
@@ -103,9 +100,8 @@ module Enumerable
   end
 
   def my_map(*args)
-    if !block_given?
-      return self.to_enum(:my_map)
-    end
+      return self.to_enum(:my_map) unless block_given?
+
     array = []
     self.to_a.my_each { |v|  array << yield(v)}
     array
@@ -151,44 +147,6 @@ def multiply_els(args)
 end
 
 
-# p [10,2].inject(:/)
-# p [ 1,2,3,4,6,8,'3', 'as' ].count {|v| v%2 == 0 }
-# p '-----------------------------------'
-# p [nil, nil, 3].my_inject?
-# p [nil, nil, 3].count?
-# p '-----------------------------------'
-
-# p ["some", "somithimes", "something"].my_inject(/s/)
-# p ["some", "somithimes", "something"].count(/s/)
-
-# p '-----------------------------------'
-# p %w[ant bear cat].my_inject?(/t/)  
-# p %w[ant bear cat].count?(/t/)  
-# p '-----------------------------------'
-
-# p [2,3,3].my_inject(3) 
-# p [1,2,3].count(3) 
-# p '-----------------------------------'
-
-# p [1, "2i", "3.14", "w"].my_inject(Numeric) 
-# p [1, "2i", "3.14", "2"].count(Numeric) 
-# p '-----------------------------------'
-
-# p %w[ant bear cat].my_inject { |word| word.length >= 10 }
-# p %w[ant bear cat].count { |word| word.length >= 10 }
-# p '-----------------------------------'
-
-# p %w[ant bear cat].my_inject { |word| word.length >= 4 }
-# p %w[ant bear cat].count { |word| word.length >= 4 }
-# p '-----------------------------------'
-
-# p %w[ant bear cat].my_inject
-# p %w[ant bear cat].count
-# p '-----------------------------------'
-
-# p [ nil, true, 99].my_inject
-# p [nil, true, 99].count
-# p '-----------------------------------'
-
-# p [1,2,3].my_inject
-# p [1,2,3].my_inject
+p [1,2,3].my_map(&:to_s)
+p [1,2,3].my_map {|i| i.to_s }
+p [1,2,3].my_map {|i| i.send(:to_s) }
