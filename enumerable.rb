@@ -18,6 +18,9 @@ module Enumerable
   end
 
   def my_select
+    if !block_given?
+      return self.to_enum(:my_select)
+    end
     new_arr = []
     new_hash = {}
     self.my_each do |k,v|
@@ -139,7 +142,7 @@ module Enumerable
   end
 end
 
-p [1,23].my_each_with_index
+p [1,23].my_select
 
 
 
