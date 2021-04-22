@@ -50,10 +50,24 @@ module Enumerable
     end
     return true
   end
+
+  def my_any?(*args)
+    if block_given? == false
+      if args.empty?
+        return !self.empty?
+      else
+        return my_each { |v| return true if v.is_a? *args } == false if args[0].class == Class
+        return my_each { |v| return true if v.match(args[0]) } == false if args[0].class == Regexp
+        return my_each { |v| return true if v == args[0] } == false
+      end
+    else
+      p "block given"
+    end
+  end
 end
 
 
-# p [1, 5, 3.14].my_all?(5)
+# p [1,2,2].my_any?
 # p [1, 5, 3.14].all?(5)
 
 # p [nil, nil, nil].my_all?
@@ -65,11 +79,11 @@ end
 # p %w[ant bear cat].my_all?(/t/)  
 # p %w[ant bear cat].all?(/t/)  
 
-# p %w[ant bear cat].my_all?(/a/) 
-# p %w[ant bear cat].all?(/a/) 
+# p [2,3,3].my_any?(3) 
+# p [1,2,3].any?(3) 
 
-# p [1, 2i, 3.14, 5].my_all?(Numeric) 
-# p [1, 2i, 3.14, 5].all?(Numeric) 
+# p [1, 2i, 3.14, 5, 's'].my_any?(Numeric) 
+# p [1, 2i, 3.14].any?(Numeric) 
 
 # p %w[ant bear cat].my_all? { |word| word.length >= 3 }
 # p %w[ant bear cat].all? { |word| word.length >= 3 }
@@ -83,5 +97,5 @@ end
 # p [ nil, true, 99].my_all?  
 # p [nil, true, 99].all?  
 
-# p [].my_all?
-# p [].all?
+# p [1,2,3].my_any?
+# p [1,2,3].any?
