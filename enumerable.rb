@@ -9,6 +9,9 @@ module Enumerable
   end
 
   def my_each_with_index
+    if !block_given?
+      return self.to_enum(:my_each_with_index)
+    end
     for i in self do
       self.class == Array ? yield(i, self.index(i)) : yield([i[0], i[1]], self.keys.index(i[0]))
     end
@@ -136,7 +139,8 @@ module Enumerable
   end
 end
 
-p [1,23].my_each
+p [1,23].my_each_with_index
+
 
 
 # p [10,2].inject(:/)
