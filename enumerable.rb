@@ -1,4 +1,6 @@
-require 'date'
+# rubocop: disable Metrics/ModuleLength
+# rubocop: disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+
 module Enumerable
   def my_each
     return self.to_enum(:my_each) unless block_given?
@@ -100,7 +102,7 @@ module Enumerable
   end
 
   def my_map(*args)
-      return self.to_enum(:my_map) unless block_given?
+    return self.to_enum(:my_map) unless block_given?
 
     array = []
     self.to_a.my_each { |v|  array << yield(v)}
@@ -109,30 +111,30 @@ module Enumerable
 
   def my_inject(*args)
     if block_given? == false
-      args.size < 2 ? accu = self[0] : accu = args[0]
-      my_each_with_index do |v,i|
+      args.size < 2 ? accu = self.to_a[0] : accu = args[0]
+      self.to_a.my_each_with_index do |v,i|
         if args.size < 2
-          break if self[i+1] == nil
-          accu = eval "#{accu} #{args[0]} #{self[i+1]}"
+          break if self.to_a[i+1] == nil
+          accu = eval "#{accu} #{args[0]} #{self.to_a[i+1]}"
         else
-          accu = eval "#{accu} #{args[1]} #{self[i]}"
+          accu = eval "#{accu} #{args[1]} #{self.to_a[i]}"
         end
       end
       return accu
     else
       if args.empty?
         i = 0
-        accu = self[0]
-        while i < self.length-1 || self[i+1] != nil
-          accu = yield(accu, self[i+1])
+        accu = self.to_a[0]
+        while i < self.to_a.length-1 || self.to_a[i+1] != nil
+          accu = yield(accu, self.to_a[i+1])
           i+=1
         end
         return accu
       else
         i = 0
         accu = args[0]
-        while i < self.length
-          accu = yield(accu, self[i])
+        while i < self.to_a.length
+          accu = yield(accu, self.to_a[i])
           i+=1
         end
         return accu
@@ -146,7 +148,5 @@ def multiply_els(args)
   args.my_inject(:*)
 end
 
-
-p [1,2,3].my_map(&:to_s)
-p [1,2,3].my_map {|i| i.to_s }
-p [1,2,3].my_map {|i| i.send(:to_s) }
+# rubocop: disable Metrics/ModuleLength
+# rubocop: disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
