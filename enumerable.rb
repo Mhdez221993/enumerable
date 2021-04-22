@@ -103,6 +103,9 @@ module Enumerable
   end
 
   def my_map(*args)
+    if !block_given?
+      return self.to_enum(:my_map)
+    end
     array = []
     self.to_a.my_each { |v|  array << yield(v)}
     array
@@ -142,7 +145,7 @@ module Enumerable
   end
 end
 
-p [1,23].my_select
+p [1,23].my_map
 
 
 
