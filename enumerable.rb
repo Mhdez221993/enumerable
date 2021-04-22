@@ -78,47 +78,60 @@ module Enumerable
       my_each { |v| return false if yield(v) } == self
     end
   end
+
+  def my_count(*args)
+    count = 0
+    if block_given? == false
+      if args.empty?
+        my_each {|v| count+=1}
+      else
+        my_each {|v| count+=1 if v == args[0] }
+      end
+    else
+      my_each { |v| count+=1 if yield(v) }
+    end
+    count
+  end
 end
 
-
-# p [].my_none?
-# p [].none?
+# p [ 1,2,3,4,6,8,'3', 'as' ].my_count {|v| v%2 == 0 }
+# p [ 1,2,3,4,6,8,'3', 'as' ].count {|v| v%2 == 0 }
 # p '-----------------------------------'
-# p [nil, nil, 3].my_none?
-# p [nil, nil, 3].none?
-# p '-----------------------------------'
-
-# p ["some", "somithimes", "something"].my_none?(/s/)
-# p ["some", "somithimes", "something"].none?(/s/)
-
-# p '-----------------------------------'
-# p %w[ant bear cat].my_none?(/t/)  
-# p %w[ant bear cat].none?(/t/)  
+# p [nil, nil, 3].my_count?
+# p [nil, nil, 3].count?
 # p '-----------------------------------'
 
-# p [2,3,3].my_none?(3) 
-# p [1,2,3].none?(3) 
+# p ["some", "somithimes", "something"].my_count(/s/)
+# p ["some", "somithimes", "something"].count(/s/)
+
+# p '-----------------------------------'
+# p %w[ant bear cat].my_count?(/t/)  
+# p %w[ant bear cat].count?(/t/)  
 # p '-----------------------------------'
 
-# p [1, "2i", "3.14", "w"].my_none?(Numeric) 
-# p [1, "2i", "3.14", "2"].none?(Numeric) 
+# p [2,3,3].my_count(3) 
+# p [1,2,3].count(3) 
 # p '-----------------------------------'
 
-# p %w[ant bear cat].my_none? { |word| word.length >= 10 }
-# p %w[ant bear cat].none? { |word| word.length >= 10 }
+# p [1, "2i", "3.14", "w"].my_count(Numeric) 
+# p [1, "2i", "3.14", "2"].count(Numeric) 
 # p '-----------------------------------'
 
-# p %w[ant bear cat].my_none? { |word| word.length >= 4 }
-# p %w[ant bear cat].none? { |word| word.length >= 4 }
-# # p '-----------------------------------'
-
-# p %w[ant bear cat].my_none? 
-# p %w[ant bear cat].none? 
+# p %w[ant bear cat].my_count { |word| word.length >= 10 }
+# p %w[ant bear cat].count { |word| word.length >= 10 }
 # p '-----------------------------------'
 
-# p [ nil, true, 99].my_none?  
-# p [nil, true, 99].none?  
+# p %w[ant bear cat].my_count { |word| word.length >= 4 }
+# p %w[ant bear cat].count { |word| word.length >= 4 }
 # p '-----------------------------------'
 
-# p [1,2,3].my_none?
-# p [1,2,3].none?
+# p %w[ant bear cat].my_count
+# p %w[ant bear cat].count
+# p '-----------------------------------'
+
+# p [ nil, true, 99].my_count
+# p [nil, true, 99].count
+# p '-----------------------------------'
+
+# p [1,2,3].my_count
+# p [1,2,3].count
