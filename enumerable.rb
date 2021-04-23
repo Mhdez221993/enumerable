@@ -33,10 +33,10 @@ module Enumerable
     new_arr = []
     new_hash = {}
     my_each do |k, v|
-      if instance_of?(Array)
-        new_arr << k if yield(k) == true
-      elsif yield(k, v) == true
+      if instance_of?(Hash)
         new_hash.store(k, v)
+      elsif yield(k, v) == true
+        new_arr << k if yield(k) == true
       end
     end
     new_arr.empty? ? new_hash : new_arr
@@ -141,3 +141,4 @@ end
 
 # rubocop: enable Metrics/ModuleLength
 # rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+
