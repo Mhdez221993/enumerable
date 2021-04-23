@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # rubocop: disable Metrics/ModuleLength
 # rubocop: disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 
@@ -114,6 +116,7 @@ module Enumerable
 
   def my_map(&proc)
     return to_enum(:my_map) unless block_given?
+
     array = []
     to_a.my_each { |v| array << proc.call(v) }
     array
@@ -126,10 +129,9 @@ module Enumerable
       to_a.my_each_with_index do |_v, i|
         if args.size < 2
           break if to_a[i + 1].nil?
-
-          accu = eval "#{accu} #{args[0]} #{to_a[i + 1]}"
+          accu = accu.send(args[0], to_a[i + 1])
         else
-          accu = eval "#{accu} #{args[1]} #{to_a[i]}"
+          accu = accu.send(args[1], to_a[i])
         end
       end
     elsif args.empty?
@@ -149,12 +151,13 @@ module Enumerable
     end
     accu
   end
-
 end
 
 def multiply_els(args)
   args.my_inject(:*)
 end
+
+p [1, 3, 4, 5].my_inject(2, &:+)
 
 # rubocop: enable Metrics/ModuleLength
 # rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
