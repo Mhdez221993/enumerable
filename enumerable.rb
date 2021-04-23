@@ -21,7 +21,7 @@ module Enumerable
 
     i = 0
     while i < to_a.length
-      instance_of?(Array) ? yield(to_a[i], i) : yield([to_a[i][0], to_a[i][1]], i)
+      instance_of?(Hash) ? yield([to_a[i][0], to_a[i][1]], i) : yield(to_a[i], i)
       i += 1
     end
     self
