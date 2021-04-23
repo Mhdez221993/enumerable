@@ -1,65 +1,54 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# Project Name
+# Custom enumerable methods
 
-> One paragraph statement about the project.
-
-![screenshot](./app_screenshot.png)
-
-Additional description about the project and its features.
+> In this project, we implemented own version of Ruby’s enumerable methods, we made use of git-flow, yield and followed the project specifications
 
 ## Built With
 
-- Major languages
-- Frameworks
-- Technologies used
-
-## Live Demo
-
-[Live Demo Link](https://livedemo.com)
-
+- Ruby
 
 ## Getting Started
-
-**This is an example of how you may give instructions on setting up your project locally.**
-**Modify this file to match your project, remove sections that don't apply. For example: delete the testing section if the currect project doesn't require testing.**
-
+ 
+- Cloning repository:
+ 1. Press the green button "Code" and copy the link bellow
+ 2. Then open terminal or Git Bash in a folder where you want to copy the repository
+ 3. Type command "git clone" and paste the address that you copied
+ 4. Press "Enter"
+ 5. cd Enumerable
+ 6. type "code ." and press enter or prees.
+- Download zip file:
+ 1. Press the green button "Code" and press "Download ZIP"
+ 2. Save the file and extract it in any folder you wish
 
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-### Setup
-
-### Install
-
-### Usage
-
+- install ruby
 ### Run tests
 
-### Deployment
-
-
+- run `rubocop` to test
 
 ## Authors
 
-👤 **Author1**
+👤 **Moises Hernandez**
 
-- GitHub: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- LinkedIn: [LinkedIn](https://linkedin.com/linkedinhandle)
+- GitHub: [@githubhandle](https://github.com/Mhdez221993)
+- Twitter: [@twitterhandle](https://twitter.com/MoisesH42060050)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/moises-hernandez-9bbb17145/)
 
-👤 **Author2**
+👤 **Aleksandar Ivezic**
 
-- GitHub: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- LinkedIn: [LinkedIn](https://linkedin.com/linkedinhandle)
+- GitHub: [@githubhandle](https://github.com/ShinobiWarior)
+- Twitter: [@twitterhandle](https://twitter.com/AIvezic)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/aleksandar-ivezi%C4%87-1a6b0391/)
 
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](issues/).
+Feel free to check the [issues page](https://github.com/Mhdez221993/Enumerable/issues/).
 
 ## Show your support
 
@@ -67,9 +56,8 @@ Give a ⭐️ if you like this project!
 
 ## Acknowledgments
 
-- Hat tip to anyone whose code was used
-- Inspiration
-- etc
+- Microverese
+- stack overflow
 
 ## 📝 License
 
