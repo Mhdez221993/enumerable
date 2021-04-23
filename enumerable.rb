@@ -103,11 +103,7 @@ module Enumerable
   def my_count(*args)
     count = 0
     if block_given? == false
-      if args.empty?
-        my_each { |_v| count += 1 }
-      else
-        my_each { |v| count += 1 if v == args[0] }
-      end
+      args.empty? ? my_each { |_v| count += 1 } : my_each { |v| count += 1 if v == args[0] }
     else
       my_each { |v| count += 1 if yield(v) }
     end
@@ -123,31 +119,16 @@ module Enumerable
   end
 
   def my_inject(*args)
-    accu = 0
     if block_given? == false
       accu = args.size < 2 ? to_a[0] : args[0]
       to_a.my_each_with_index do |_v, i|
-        if args.size < 2
-          break if to_a[i + 1].nil?
-          accu = accu.send(args[0], to_a[i + 1])
-        else
-          accu = accu.send(args[1], to_a[i])
-        end
-      end
-    elsif args.empty?
-      i = 0
-      accu = to_a[0]
-      while i < to_a.length - 1 || !to_a[i + 1].nil?
-        accu = yield(accu, to_a[i + 1])
-        i += 1
+        accu = accu.send(args[0], to_a[i + 1]) if args.size < (2) && !to_a[i + 1].nil?
+        accu = accu.send(args[1], to_a[i]) if args.size >= 2
       end
     else
-      i = 0
-      accu = args[0]
-      while i < to_a.length
-        accu = yield(accu, to_a[i])
-        i += 1
-      end
+      accu = args.empty? ? to_a[0] : args[0]
+      my_each_with_index { |_v, i| accu = yield(accu, to_a[i + 1]) unless to_a[i + 1].nil? } if args.empty?
+      my_each_with_index { |_v, i| accu = yield(accu, to_a[i]) } unless args.empty?
     end
     accu
   end
@@ -157,7 +138,7 @@ def multiply_els(args)
   args.my_inject(:*)
 end
 
-p [1, 3, 4, 5].my_inject(2, &:+)
+p [1, 1, 3, 4, 5].my_inject(1) { |product, n| product * n }
 
 # rubocop: enable Metrics/ModuleLength
 # rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
