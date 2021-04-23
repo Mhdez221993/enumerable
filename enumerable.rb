@@ -71,7 +71,7 @@ module Enumerable
   def my_any?(*args)
     if block_given? == false
       if args.empty?
-        !empty? ? my_each { |v| return true unless v.nil? } == false : false
+        !empty? ? my_each { |v| return true unless v.nil? || v == false } == false : false
       else
         return my_each { |v| return true if v.is_a?(*args) } == false if args[0].instance_of?(Class)
         return my_each { |v| return true if v.match(args[0]) } == false if args[0].instance_of?(Regexp)
