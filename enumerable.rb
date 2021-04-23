@@ -120,6 +120,7 @@ module Enumerable
 
   def my_inject(*args)
     if block_given? == false
+      raise LocalJumpError, 'no block given' if args.empty?
       accu = args.size < 2 ? to_a[0] : args[0]
       to_a.my_each_with_index do |_v, i|
         accu = accu.send(args[0], to_a[i + 1]) if args.size < (2) && !to_a[i + 1].nil?
