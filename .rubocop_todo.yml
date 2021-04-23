@@ -20,7 +20,7 @@ Lint/LiteralAsCondition:
 # Offense count: 4
 # Configuration parameters: IgnoredMethods, CountRepeatedAttributes.
 Metrics/AbcSize:
-  Max: 47
+  Max: 48
 
 # Offense count: 6
 # Configuration parameters: CountBlocks.

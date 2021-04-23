@@ -10,7 +10,7 @@ module Enumerable
 
     i = 0
     while i < to_a.length
-      instance_of?(Array) ? yield(to_a[i]) : yield(to_a[i][0], to_a[i][1])
+      instance_of?(Hash) ? yield([to_a[i][0], to_a[i][1]]) : yield(to_a[i])
       i += 1
     end
     self
@@ -119,8 +119,8 @@ module Enumerable
   end
 
   def my_inject(*args)
+    raise LocalJumpError, 'no block given' if args.empty?
     if block_given? == false
-      raise LocalJumpError, 'no block given' if args.empty?
       accu = args.size < 2 ? to_a[0] : args[0]
       to_a.my_each_with_index do |_v, i|
         accu = accu.send(args[0], to_a[i + 1]) if args.size < (2) && !to_a[i + 1].nil?
