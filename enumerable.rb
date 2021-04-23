@@ -114,7 +114,6 @@ module Enumerable
 
   def my_map(&proc)
     return to_enum(:my_map) unless block_given?
-
     array = []
     to_a.my_each { |v| array << proc.call(v) }
     array
@@ -157,10 +156,5 @@ def multiply_els(args)
   args.my_inject(:*)
 end
 
-# p [1,2,3,4].my_map { |i| i*i }  
-# p (1..4).map { |i| i*i }  
-p ['a', 'b', 'c', 'd', 'e', 'f'].my_each_with_index {|v, i| puts " #{v} : #{i}"}
-h= {'dog' => 'canine', 'cat' => 'feline', 'donkey' => 'asinine', 12 => 'dodecine'}
-p h.my_each_with_index {|k,v,i| puts "#{k} : #{v} : #{i}" }
 # rubocop: enable Metrics/ModuleLength
 # rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
