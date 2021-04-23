@@ -52,13 +52,16 @@ module Enumerable
       if index(nil)
         return !index(nil) ? true : false
       end
+      if index(false)
+        return !index(false) ? true : false
+      end
 
       unless args.empty?
-        return false if (args[0].class != Regexp) && (args[0].class != Class)
 
         my_each do |e|
           return false if args[0].instance_of?(Regexp) && args[0].match(e.to_s).nil?
           return false if args[0].instance_of?(Class) && (e.is_a? args[0]) == false
+          return false if !args[0].instance_of?(Regexp) && !args[0].instance_of?(Class) && args[0] != e
         end
       end
     end
@@ -141,4 +144,3 @@ end
 
 # rubocop: enable Metrics/ModuleLength
 # rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-
