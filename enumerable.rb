@@ -138,7 +138,5 @@ def multiply_els(args)
   args.my_inject(:*)
 end
 
-p [1, 1, 3, 4, 5].my_inject(1) { |product, n| product * n }
-
 # rubocop: enable Metrics/ModuleLength
 # rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
