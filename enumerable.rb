@@ -7,8 +7,8 @@ module Enumerable
     return to_enum(:my_each) unless block_given?
 
     i = 0
-    while i < to_a.length - 1
-      instance_of?(Array) ? yield(to_a[i]) : yield(self[0][0], self[0][1])
+    while i < to_a.length
+      instance_of?(Array) ? yield(to_a[i]) : yield(to_a[i][0], to_a[i][1])
       i += 1
     end
     self
@@ -18,8 +18,8 @@ module Enumerable
     return to_enum(:my_each_with_index) unless block_given?
 
     i = 0
-    while i < to_a.length - 1
-      instance_of?(Array) ? yield(to_a[i], index(to_a[i])) : yield([self[0], self[1]], keys.index(self[0]))
+    while i < to_a.length
+      instance_of?(Array) ? yield(to_a[i], i) : yield([to_a[i][0], to_a[i][1]], i)
       i += 1
     end
     self
@@ -112,11 +112,11 @@ module Enumerable
     count
   end
 
-  def my_map(*_args)
+  def my_map(&proc)
     return to_enum(:my_map) unless block_given?
 
     array = []
-    to_a.my_each { |v| array << yield(v) }
+    to_a.my_each { |v| array << proc.call(v) }
     array
   end
 
@@ -150,11 +150,17 @@ module Enumerable
     end
     accu
   end
+
 end
 
 def multiply_els(args)
   args.my_inject(:*)
 end
 
+# p [1,2,3,4].my_map { |i| i*i }  
+# p (1..4).map { |i| i*i }  
+p ['a', 'b', 'c', 'd', 'e', 'f'].my_each_with_index {|v, i| puts " #{v} : #{i}"}
+h= {'dog' => 'canine', 'cat' => 'feline', 'donkey' => 'asinine', 12 => 'dodecine'}
+p h.my_each_with_index {|k,v,i| puts "#{k} : #{v} : #{i}" }
 # rubocop: enable Metrics/ModuleLength
 # rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
