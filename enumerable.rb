@@ -88,7 +88,7 @@ module Enumerable
       if args.empty?
         if !empty?
           my_each do |v|
-            return false unless v.nil? && (v != false || false)
+            return false unless v.nil? || (v == false)
           end == self
         else
           true
