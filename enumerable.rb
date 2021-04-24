@@ -122,8 +122,8 @@ module Enumerable
   end
 
   def my_inject(*args)
-    raise LocalJumpError, 'no block given' if args.empty?
     if block_given? == false
+      raise LocalJumpError, 'no block given' if args.empty?
       accu = args.size < 2 ? to_a[0] : args[0]
       to_a.my_each_with_index do |_v, i|
         accu = accu.send(args[0], to_a[i + 1]) if args.size < (2) && !to_a[i + 1].nil?
@@ -138,8 +138,8 @@ module Enumerable
   end
 end
 
-def multiply_els(args)
-  args.my_inject(:*)
+def multiply_els(array) 
+  array.my_inject { |product, i| product * i } 
 end
 
 # rubocop: enable Metrics/ModuleLength
