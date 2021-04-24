@@ -113,11 +113,11 @@ module Enumerable
     count
   end
 
-  def my_map(&proc)
+  def my_map(*proc, &block)
     return to_enum(:my_map) unless block_given?
 
     array = []
-    to_a.my_each { |v| array << proc.call(v) }
+    to_a.my_each { |v| array << (proc[0] ? proc[0].call(v) : block.call(v)) }
     array
   end
 
