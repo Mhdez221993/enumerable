@@ -34,7 +34,7 @@ module Enumerable
     new_hash = {}
     my_each do |k, v|
       if instance_of?(Hash)
-        new_hash.store(k, v) if yield(k,v)
+        new_hash.store(k, v) if yield(k, v)
       elsif yield(k, v) == true
         new_arr << k if yield(k) == true
       end
