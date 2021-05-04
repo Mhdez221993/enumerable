@@ -192,4 +192,10 @@ describe Enumerable do
             expect(arr.my_inject(2) {|a, v| a * v }).to eq 48
         end
     end
+
+    describe "#multiply_els" do
+        it "return the multiplication of all the values" do 
+            expect(multiply_els(arr)).to eq(24)
+        end
+    end
 end
