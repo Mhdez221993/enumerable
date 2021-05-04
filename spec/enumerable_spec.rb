@@ -51,4 +51,38 @@ describe Enumerable do
             expect(hash.my_select {|v| v == '1'}).to eq({"1" => 'January'})
       end
     end
+
+    describe "#my_all?" do
+        it "return true when ther is no nil or false value" do
+            expect(arr.my_all?).to eq true
+        end
+
+        it "return false when ther is one nil value" do
+            array = [nil,1,2,3]
+            expect(array.my_all?).to eq false
+        end
+
+        it "return false when ther is one false value" do
+            array = [false,1,2,3]
+            expect(array.my_all?).to eq false
+        end
+
+        it "return true when all values satisfy the condition" do
+            expect(arr.my_all? {|v| v > 0}).to eq true
+        end
+
+        it "return true when all values are instance of class" do
+            expect(arr.my_all?(Numeric)).to eq true
+        end
+
+        it "return false when a value is different from the argument" do
+            expect(arr.my_all?(1)).to eq false
+        end
+
+        it "return true when all values match with  the regex" do
+            expect(arr.my_all?(/[0-9]/)).to eq true
+        end
+
+
+    end
 end
