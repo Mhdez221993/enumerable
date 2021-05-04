@@ -152,4 +152,24 @@ describe Enumerable do
             expect(arr.my_count {|v| v>1}).to eq 3
         end
     end
+
+    describe "#my_map" do
+        it "return the enumerable if no block given" do
+            expect(arr.my_map).to be_a(Enumerator)
+        end
+
+        it "return a new array if block given" do
+            expect(arr.my_map {|v| v+1}).to eq([2,3,4,5])
+        end
+
+        it "return a new array if proc is given" do
+            expect(arr.my_map(&:to_s )).to eq(["1","2","3","4"])
+        end
+
+        it "return a new array if proc is given" do
+            expect(arr.my_map(Proc.new {|v| v.to_s}) {|v| v+1}).to eq(["1","2","3","4"])
+        end
+        
+
+    end
 end
