@@ -169,7 +169,27 @@ describe Enumerable do
         it "return a new array if proc is given" do
             expect(arr.my_map(Proc.new {|v| v.to_s}) {|v| v+1}).to eq(["1","2","3","4"])
         end
-        
+    end
 
+    describe "#my_inject" do
+        it "no block and proc raise error" do
+            expect{ arr.my_inject }.to raise_error
+        end
+
+        it "if simbol given it execute the operatin" do
+            expect(arr.my_inject(:+)).to eq 10
+        end
+
+        it "if simbol and integer given it execute the operatin with the integer as started value" do
+            expect(arr.my_inject(2, :+)).to eq 12
+        end
+
+        it "takes a block a execute the condition given" do
+            expect(arr.my_inject {|a, v| a * v }).to eq 24
+        end
+
+        it "takes argument as accumulator an execute it in the block" do
+            expect(arr.my_inject(2) {|a, v| a * v }).to eq 48
+        end
     end
 end
