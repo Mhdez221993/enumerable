@@ -23,6 +23,15 @@
 
 To get a local copy up and running follow these simple example steps.
 
+
+## Running tests
+
+To run the tests locally :
+
+- 1. run the file in the spec folder call enumerable_spec.rb.
+
+   eg : `rspec ./spec/enumerable_spec.rb`
+
 ### Prerequisites
 
 - install ruby
@@ -37,6 +46,13 @@ To get a local copy up and running follow these simple example steps.
 - GitHub: [@githubhandle](https://github.com/Mhdez221993)
 - Twitter: [@twitterhandle](https://twitter.com/MoisesH42060050)
 - LinkedIn: [LinkedIn](https://www.linkedin.com/in/moises-hernandez-9bbb17145/)
+
+👤 **Safa Aballagh**
+
+- GitHub: [@Safafa](https://github.com/safafa)
+- Twitter: [@safa aballagh](https://twitter.com/Aballagh_S)
+- LinkedIn: [Aballagh Safa](https://www.linkedin.com/in/aballaghsafa/)
+
 
 👤 **Aleksandar Ivezic**
 

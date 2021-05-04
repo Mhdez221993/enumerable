@@ -74,7 +74,7 @@ module Enumerable
         !empty? ? my_each { |v| return true unless v.nil? || v == false } == false : false
       else
         return my_each { |v| return true if v.is_a?(*args) } == false if args[0].instance_of?(Class)
-        return my_each { |v| return true if v.match(args[0]) } == false if args[0].instance_of?(Regexp)
+        return my_each { |v| return true if v.to_s.match(args[0]) } == false if args[0].instance_of?(Regexp)
 
         my_each { |v| return true if v == args[0] } == false
       end
@@ -95,7 +95,7 @@ module Enumerable
         end
       else
         my_each { |v| return false if v.is_a?(*args) } == self if args[0].instance_of?(Class)
-        my_each { |v| return false if v.match(args[0]) } == self if args[0].instance_of?(Regexp)
+        my_each { |v| return false if v.to_s.match(args[0]) } == self if args[0].instance_of?(Regexp)
         my_each { |v| return false if v == args[0] } == self
       end
     else
