@@ -3,6 +3,11 @@ require_relative '../enumerable.rb'
 describe Enumerable do
     let(:arr) { [1,2,3,4] }
     let(:hash) { {"1" => "January", "2" => "February"} }
+    let(:array_nil) { [nil,1,2,3] }
+    let(:array_false) { [false,1,2,3] }
+    let(:array_false_and_nil) { [false,nil,false,nil] }
+    
+
 
     describe "#my_each" do
        it "return the enumerable" do
@@ -58,13 +63,11 @@ describe Enumerable do
         end
 
         it "return false when ther is one nil value" do
-            array = [nil,1,2,3]
-            expect(array.my_all?).to eq false
+            expect(array_nil.my_all?).to eq false
         end
 
         it "return false when ther is one false value" do
-            array = [false,1,2,3]
-            expect(array.my_all?).to eq false
+            expect(array_false.my_all?).to eq false
         end
 
         it "return true when all values satisfy the condition" do
@@ -82,7 +85,31 @@ describe Enumerable do
         it "return true when all values match with  the regex" do
             expect(arr.my_all?(/[0-9]/)).to eq true
         end
+    end
 
+    describe "#my_any" do
+        it 'return true if find one value different then nil' do
+            expect(array_nil.my_any?).to eq true
+        end
 
+        it 'return true if find one value different then false' do
+            expect(array_false.my_any?).to eq true
+        end
+
+        it 'return false if all values are nil or false' do
+            expect(array_false_and_nil.my_any?).to eq false
+        end
+
+        it 'return true if one value satisfy the contidion' do
+            expect(arr.my_any?(Numeric)).to eq true
+        end
+
+        it "return true when all values match with  the regex" do
+            expect(arr.my_any?(/[0-9]/)).to eq true
+        end
+
+        it 'return true if one value satisfy the contidion' do
+            expect(arr.my_any?{|v| v > 3}).to eq true
+        end
     end
 end
