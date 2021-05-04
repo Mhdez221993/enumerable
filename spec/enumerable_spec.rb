@@ -112,4 +112,31 @@ describe Enumerable do
             expect(arr.my_any?{|v| v > 3}).to eq true
         end
     end
+
+    describe "#my_none?" do
+        it 'return false if find one value different then nil' do
+            expect(array_nil.my_none?).to eq false
+        end
+
+        it 'return false if find one value different then false' do
+            expect(array_false.my_none?).to eq false
+        end
+
+        it 'return true if all the values are false or nil' do
+            expect(array_false_and_nil.my_none?).to eq true
+        end
+
+        it 'return false if find one value instance of class' do
+            expect(array_false.my_none?(Numeric)).to eq false
+        end
+
+        it 'return false if find one value match with regex' do
+            expect(arr.my_none?(/[0-9]/)).to eq false
+        end
+
+        it 'return false if find one value satisfy the condition' do
+            expect(arr.my_none? {|v| v > 0}).to eq false
+        end
+    
+    end
 end
