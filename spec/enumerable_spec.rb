@@ -137,6 +137,19 @@ describe Enumerable do
         it 'return false if find one value satisfy the condition' do
             expect(arr.my_none? {|v| v > 0}).to eq false
         end
-    
+    end
+
+    describe "#my_count" do
+        it "if no paramether given it count all the values" do
+            expect(arr.my_count).to eq 4
+        end
+
+        it "if paramether given it count how many times is included" do
+            expect(arr.my_count(3)).to eq 1
+        end
+
+        it "count the elements that sitisfy the contition" do
+            expect(arr.my_count {|v| v>1}).to eq 3
+        end
     end
 end
